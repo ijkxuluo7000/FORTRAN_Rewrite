@@ -6,8 +6,6 @@
 # University of California, San Diego
 # UCSD School of Medicine
 # Simonson Lab of Physiological Genomics of Altitude Adaptation
-
-#Note: The final Curve may be 
 ##############################################################
 
 
@@ -138,5 +136,6 @@ plot_kelman_curve = function(sat  = c(90.3,85.2,83.8,84.4,41.5),
   points(po2, sat, pch = 16)
 }
 
+#This is just a test
 windows()
 plot_kelman_curve()
