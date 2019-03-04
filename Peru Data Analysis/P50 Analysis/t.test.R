@@ -1,0 +1,43 @@
+library(readxl)
+
+get_directory = function(){
+  args <- commandArgs(trailingOnly = FALSE)
+  file <- "--file="
+  rstudio <- "RStudio"
+  
+  match <- grep(rstudio, args)
+  if(length(match) > 0){
+    return(dirname(rstudioapi::getSourceEditorContext()$path))
+  }else{
+    match <- grep(file, args)
+    if (length(match) > 0) {
+      return(dirname(normalizePath(sub(file, "", args[match]))))
+    }else{
+      return(dirname(normalizePath(sys.frames()[[1]]$ofile)))
+    }
+  }
+}
+
+wd = get_directory()
+setwd(wd)
+
+data = read_excel(list.files(pattern = "ttest"))
+data = as.data.frame(data)
+p50_pre = data$p50_pre
+p50_post = data$p50_post
+p50_con = data$con
+
+t.test(p50_pre, p50_post)
+
+t.test(p50_con, p50_post)
+
+# Welch Two Sample t-test
+# 
+# data:  p50_pre and p50_post
+# t = -3.3805, df = 8.9765, p-value = 0.008151
+# alternative hypothesis: true difference in means is not equal to 0
+# 95 percent confidence interval:
+#   -2.9493432 -0.5839901
+# sample estimates:
+#   mean of x mean of y 
+# 24.50000  26.26667 
